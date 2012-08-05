@@ -1,8 +1,8 @@
 #!/bin/bash
-echo "afissemammita" >> /root/ninuxstats/rrds/prova.txt
-APP_DIR="/root/ninuxstats/"
+#echo "afissemammita" >> /root/ninuxstats/rrds/prova.txt
+APP_DIR="/usr/src/ninuxstats/"
 cd $APP_DIR
-for i in $(route -n | grep 172.16. | grep 255.255.255.255 | awk '{print $1}'); do 
+for i in $(wget -q http://127.0.0.1:2006/route -O -| grep "/32" |  cut -d "/" -f 1 ); do 
 	echo $i
 	./rrd2.sh $i > rrd.log 2> rrd.err& 
 done
